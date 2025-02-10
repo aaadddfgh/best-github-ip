@@ -33,11 +33,11 @@ class nslookup(DNS_provider):
         timeout = 16.0
 
 
-        chrome_driver_path_obj = Service("C:\Program Files\Google\Chrome\Application")
-        options.add_argument('--headless')
-        service = webdriver.ChromeService(executable_path="C:\\Program Files\\Google\\Chrome\\Application\\chromedriver.exe")
-        driver = webdriver.Chrome(options=options,service=service)    
         
+        options.add_argument('--headless')
+        # service = webdriver.ChromeService(executable_path="C:\\Program Files\\Google\\Chrome\\Application\\chromedriver.exe")
+        # driver = webdriver.Chrome(options=options,service=service)    
+        driver = webdriver.Chrome(options=options)
         driver.set_page_load_timeout(timeout)
         try:   
             pass 
@@ -115,6 +115,7 @@ class nslookup(DNS_provider):
 
         
 
-
+        if len([i for i in ips if i[2] is not None]) ==0:
+            raise Exception('all ip not accessable')
         min_index = min(enumerate([i for i in ips if i[2] is not None]), key=lambda x: x[1][2])[0]
         return [i for i in ips if i[2] is not None][min_index][3]
